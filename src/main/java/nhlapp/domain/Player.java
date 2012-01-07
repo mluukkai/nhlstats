@@ -14,21 +14,23 @@ public class Player {
     public Player() {
     }
 
-    public Player(String name, String team, int games, int goals, int assists, int penalties) {
+    public Player(String name, String team, int games, int goals, int assists, int penalties, int playerId) {
         this.name = name;
         this.team = team;
         this.games = games;
         this.goals = goals;
         this.assists = assists;
         this.penalties = penalties;
+        this.playerId = playerId;
     }    
-    
+        
     private String name;
     private String team;
     private int games;
     private int goals;
     private int assists;
     private int penalties;
+    private int playerId;
     
     public Long getId() {
         return id;
@@ -84,14 +86,26 @@ public class Player {
 
     public String getTeam() {
         return team;
-    }   
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }  
+    
+    public String getNoName(){
+        return team+" "+games+" "+goals+"+"+assists+"="+getPoints()+" "+penalties;
+    }
     
     @Override
     public String toString() {
-        return name+" "+team+" "+games+" "+goals+"+"+assists+"="+points()+" "+penalties;
+        return name+" "+team+" "+games+" "+goals+"+"+assists+"="+getPoints()+" "+penalties;
     }
 
-    private int points() {
+    private int getPoints() {
         return goals+assists;
     }
 }

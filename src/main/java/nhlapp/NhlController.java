@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.servlet.http.HttpSession;
 import nhlapp.dao.PlayerDao;
 import nhlapp.domain.Player;
+import nhlapp.downloader.PlayerDownloader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,9 @@ public class NhlController {
     @Autowired
     PlayerDao playerDao;
             
+    @Autowired
+    PlayerDownloader playerDownloader;
+    
     @RequestMapping({"/","nhl"}) 
     public String showFrontPage(Map<String, Object> model, HttpSession session) {
         model.put("players", playerDao.findAll());
@@ -47,4 +51,17 @@ public class NhlController {
         playerDao.save(player);        
         return "redirect:/";
     }     
+    
+    @RequestMapping({"/download"}) 
+    public String download(Map<String, Object> model, HttpSession session) {
+        playerDownloader.setPageLimit(2);
+        
+        for (Player player : playerDownloader.getPlayers()) {
+            playerDao.save(player);
+        }
+        
+        model.put("players", playerDao.findAll());
+        
+        return "nhl";
+    }      
 }

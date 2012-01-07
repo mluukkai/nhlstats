@@ -51,7 +51,13 @@
                             <td><label for="penalties">Penalties </label></td>
                             <td><sf:input path="penalties" id="penalties" size="3"/>
                             </td>
+                        </tr>    
+                        <tr>
+                            <td><label for="playerId">Id </label></td>
+                            <td><sf:input path="playerId" id="playerId" size="3"/>
+                            </td>
                         </tr>                          
+                       
                         <tr>
                             <td></td>
                             <td><input name="commit" type="submit" value="add" /></td>
