@@ -23,5 +23,6 @@
             </c:forEach>
         </ul>
         
+        <a href="/add">add</a>
     </body>
 </html>
