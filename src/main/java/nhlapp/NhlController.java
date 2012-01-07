@@ -58,9 +58,14 @@ public class NhlController {
     
     @RequestMapping({"/download"}) 
     public String download(Map<String, Object> model, HttpSession session) {
-        playerDownloader.setPageLimit(2);
+        playerDownloader.setPageLimit(1);
         
         for (Player player : playerDownloader.getPlayers()) {
+            Player old = playerDao.findByName(player.getName());
+            if ( old!=null ) {
+                player.setId(old.getId());
+            }                 
+            
             playerDao.save(player);
         }
         
