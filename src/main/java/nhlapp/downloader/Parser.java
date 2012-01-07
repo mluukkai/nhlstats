@@ -76,4 +76,13 @@ public class Parser {
         int last = string.lastIndexOf(">") + 1;
         return Integer.parseInt(string.substring(last));
     }
+
+    public String rawMode() {
+        String text = "";
+        while (lukija.hasNextLine()) {
+            String line = lukija.nextLine();
+            text += line +"\n";
+        }
+        return text;
+    }
 }

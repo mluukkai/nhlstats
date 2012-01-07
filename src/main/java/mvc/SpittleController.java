@@ -1,19 +1,9 @@
 package mvc;
 
-import java.io.*;
 import javax.servlet.http.HttpSession;
 import mvc.model.*;
 import mvc.service.SpitterService;
 import mvc.util.S3Util;
-import org.apache.commons.io.FileUtils;
-import org.jets3t.service.*;
-import org.jets3t.service.acl.AccessControlList;
-import org.jets3t.service.acl.GroupGrantee;
-import org.jets3t.service.acl.Permission;
-import org.jets3t.service.impl.rest.httpclient.RestS3Service;
-import org.jets3t.service.model.S3Bucket;
-import org.jets3t.service.model.S3Object;
-import org.jets3t.service.security.AWSCredentials;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -49,5 +49,7 @@
         <a href="/add">add</a>
 
         <a href="/download">download</a>
+        
+        <a href="/raw">raw</a>
     </body>
 </html>

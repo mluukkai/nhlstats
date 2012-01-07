@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import javax.servlet.http.HttpSession;
+import mvc.util.S3Util;
 import nhlapp.dao.PlayerDao;
 import nhlapp.domain.Player;
 import nhlapp.downloader.PlayerDownloader;
@@ -23,6 +24,9 @@ public class NhlController {
             
     @Autowired
     PlayerDownloader playerDownloader;
+    
+    @Autowired
+    S3Util s3Util;
     
     @RequestMapping({"/","nhl"}) 
     public String showFrontPage(Map<String, Object> model, HttpSession session) {
@@ -63,5 +67,16 @@ public class NhlController {
         model.put("players", playerDao.findAll());
         
         return "nhl";
-    }      
+    } 
+    
+    @RequestMapping({"/raw"}) 
+    public String rawMode(Map<String, Object> model, HttpSession session) {
+        playerDownloader.setPageLimit(2);
+        
+        boolean status = s3Util.saveFile(playerDownloader.rawText(1), "1.txt");
+        
+        model.put("text", status);
+        
+        return "raw";
+    }       
 }

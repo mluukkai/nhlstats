@@ -65,4 +65,32 @@ public class S3Util {
         System.out.println("go!");
         return true;
     }
+    
+   public boolean saveFile(String content, String name) {
+     
+        try {
+            AWSCredentials cred = new AWSCredentials(s3AccessKey, s3SecretKey);
+            S3Service s3 = new RestS3Service(cred);
+            
+            S3Bucket imageBucket = s3.getBucket(s3Bucket);
+            S3Object imageObject = new S3Object(name);
+            imageObject.setDataInputStream(new ByteArrayInputStream(content.getBytes()));
+            imageObject.setContentLength(content.getBytes().length);
+            imageObject.setContentType("text/plain");
+
+            AccessControlList acl = new AccessControlList();
+            acl.setOwner(imageBucket.getOwner());
+            acl.grantPermission(GroupGrantee.ALL_USERS, Permission.PERMISSION_READ);
+            imageObject.setAcl(acl);
+
+            s3.putObject(imageBucket, imageObject);
+
+        } catch (Exception ex) {
+            System.out.println("prkl");
+            return false;
+        }
+
+        System.out.println("go!");
+        return true;
+    }    
 }
