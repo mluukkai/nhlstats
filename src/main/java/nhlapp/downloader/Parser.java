@@ -36,7 +36,7 @@ public class Parser {
     private void parseLine(String line) {
 
         for (String pl : line.split("/ice/player.htm")) {
-            if (pl.charAt(0) == '<'  || pl.charAt(1) == ' '  ) {
+            if (pl.charAt(0) == '<'  || pl.charAt(1) == ' ' || pl.contains("Page 27 of 27") ) {
                 continue;
             }
                        
