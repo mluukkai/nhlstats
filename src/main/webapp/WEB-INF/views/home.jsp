@@ -15,56 +15,14 @@
     <body>
         <h1>Welcome to Spitter </h1>
 
-
-        <h3>Latest spittles:</h3>
-
-        <ul>
-            <c:forEach var="spittle" items="${spittles}">
-
-                <s:url value="/spitters/spittles?spitter={spitterName}" var="spitter_url"> 
-                    <s:param name="spitterName" value="${spittle.spitter.name}"/>
-                </s:url>
-
-                <li>
-                    <a href="${spitter_url}"> <c:out value="${spittle.spitter.name}"/></a>                
-                    <c:out value="${spittle.content}"/> 
-                </li>
-            </c:forEach>
-        </ul>
-
-        <h3>Actions</h3>
-
-
-
-        <ul>
-            <c:if test="${session eq true}">
-                <li>
-                    <a href="/spitters?my">mypage</a>
-                </li>  
-                <li>
-                    <a href="/spitters?logout">logout</a>
-                </li>   
-
-            </c:if>
-            <c:if test="${session eq false}">
-                <li>
-                    <a href="/spitters?login">login</a>
-                </li>           
-                <li>
-                    <a href="/spitters?new">register</a>
-                </li>
-            </c:if>   
-            <li>
-                <a href="/spitters">spitters</a>
-            </li> 
-            
-            <li>
-                <a href="/reset">reset</a>
-            </li>             
-
+        <ul>          
             <li>
                 <a href="/tuote">tuote</a>
             </li>                
+            
+            <li>
+                <a href="/nhl">nhl</a>
+            </li> 
             
         </ul>
     </body>

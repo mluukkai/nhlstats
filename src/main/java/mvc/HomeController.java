@@ -1,12 +1,12 @@
 package mvc;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import javax.servlet.http.HttpSession;
 import mvc.service.SpitterService;
-import mvc.temp.HibernateTuoteDao2;
-import mvc.temp.Tuote;
-import mvc.temp.TuoteDao;
+import nhlapp.dao.HibernateTuoteDao2;
+import nhlapp.domain.Tuote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +21,20 @@ public class HomeController {
     @Autowired
     public HomeController(SpitterService spitterService) {
         this.spitterService = spitterService;
-    }
-            
-    @RequestMapping({"/","/home"}) //(value="/test")
+    }    
+    
+//    @RequestMapping({"/","nhl"}) 
+//    public String showFrontPage(Map<String, Object> model, HttpSession session) {
+//        ArrayList<String> players = new ArrayList<String>();
+//        players.add("Lemieux");
+//        players.add("Gretzky");
+//        
+//        model.put("players", players);
+//        
+//        return "nhl";
+//    }    
+    
+    @RequestMapping({"/home"}) 
     public String showHomePage(Map<String, Object> model, HttpSession session) {
         model.put("spittles", spitterService.getRecentSpittles(DEFAULT_SPITTLES_PER_PAGE));
         model.put("session", session.getAttribute("spitter")!=null);
@@ -35,18 +46,7 @@ public class HomeController {
     public String showAdminPage(Map<String, Object> model, HttpSession session) {
         return "admin/admin";
     }    
-
-    @RequestMapping({"reset"})
-    public String reset(Map<String, Object> model, HttpSession session) {
-        try{
-            mvc.util.DBReset.createTable();
-            System.out.println("you");
-        } catch(Exception e){
-            System.out.println("paska");
-        }
-        
-        return "home";
-    }    
+  
     
     @Autowired
     private HibernateTuoteDao2 tuoteDao;

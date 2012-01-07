@@ -1,5 +1,7 @@
 package mvc.temp;
 
+import nhlapp.dao.TuoteDao;
+import nhlapp.domain.Tuote;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

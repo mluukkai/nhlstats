@@ -23,9 +23,7 @@
         </property>
     </bean>                
     
-    <bean id="spitterService" class="mvc.service.SpitterServiceImpl" />
-    
-    
+    <bean id="spitterService" class="mvc.service.SpitterServiceImpl" />  
     
     <bean id="s3Util" class="mvc.util.S3Util">
         <property name="s3AccessKey" value="${s3.accessKey}"/>
@@ -33,36 +31,9 @@
         <property name="s3Bucket" value="${s3.bucket}"/>
     </bean> 
     
-    <!-- experimental! -->
-
-    
-  <!-- webflow -->
-  
-    <webflow:flow-executor id="flowExecutor" flow-registry="flowRegistry" />
-
-    <webflow:flow-registry id="flowRegistry" > 
-        <webflow:flow-location path="/WEB-INF/flows/springpizza.xml" />
-    </webflow:flow-registry>     
-
-    <webflow:flow-builder-services id="flowBuilderServices" 
-           view-factory-creator="mvcViewFactoryCreator"/>
-
-    <bean id="mvcViewFactoryCreator" class=
-      "org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
-        <property name="defaultViewSuffix" value=".jspx" />   
-    </bean>
-
-    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
-        <property name="flowRegistry" ref="flowRegistry" />
-    </bean>
-
-    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
-        <property name="flowExecutor" ref="flowExecutor" />
-    </bean>
        
     <!-- secirity -->
-    
-    
+        
     <security:http auto-config="true" use-expressions="true">
         <security:intercept-url pattern="/springpizza*" access="ROLE_SPITTER"/>
         <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_SPITTER')" />
@@ -75,9 +46,6 @@
     </security:user-service>
     
     <security:authentication-manager>
-        <!--
-            <security:authentication-provider user-service-ref="userService"/>
-        -->
         <security:authentication-provider>            
             <security:jdbc-user-service data-source-ref="dataSource" />
         </security:authentication-provider>
@@ -94,12 +62,8 @@
     <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
         <property name="driverClassName" value="org.postgresql.Driver"/>                   
    
-   <!--
-        <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>                         
--->
-       
-        <property name="url" value="jdbc:postgresql://localhost/spitter"/> 
-        
+  
+        <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>                               
         <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
         <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>                                
         
@@ -132,16 +96,19 @@
         
         <property name="packagesToScan">
             <list>
-                <value>mvc.temp</value>    
+                <value>nhlapp.domain</value>     
             </list>
         </property>        
 
     </bean>
  
-    <bean id="tuoteDao" class="mvc.temp.HibernateTuoteDao2" >
+    <bean id="tuoteDao" class="nhlapp.dao.HibernateTuoteDao2" >
          <constructor-arg ref="sessionFactory"/>
     </bean>
 
+    <bean id="playerDao" class="nhlapp.dao.HibernatePlayerDao" >
+         <constructor-arg ref="sessionFactory"/>
+    </bean>
 
 
 </beans>
