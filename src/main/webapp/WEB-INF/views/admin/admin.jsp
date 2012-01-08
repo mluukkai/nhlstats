@@ -13,7 +13,7 @@
             <li><a href="/add">add</a></li>
             <li><a href="/download">download</a></li>
             <li><a href="/players.txt">players.txt</a></li>
-            <li><a href="/players.html">players.back</a></li>
+            <li><a href="/players.html">players.html</a></li>
             <li><a href="/raw">raw</a></li>             
         </ul>
     </body>

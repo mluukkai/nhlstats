@@ -15,6 +15,7 @@
         <h1>Nhl player statistics</h1>
 
         <p><i>${updated}</i></p>
+        <a href="/players.txt">show as text</a>
         
         <table>
             <thead>
@@ -48,12 +49,5 @@
             </tbody>
         </table>
 
-        <a href="/add">add</a>
-
-        <a href="/download">download</a>
-        
-        <a href="/players.txt">txt</a>
-        
-        <a href="/raw">raw</a> 
     </body>
 </html>

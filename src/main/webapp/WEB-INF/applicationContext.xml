@@ -11,30 +11,13 @@
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                            http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
-
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- one of the properties available; the maximum file size in bytes -->
-        <property name="maxUploadSize" value="10000000"/>
-    </bean>     
     
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
             <value>/WEB-INF/application.properties</value>
         </property>
-    </bean>                
-    
-    <bean id="spitterService" class="mvc.service.SpitterServiceImpl" />  
-    
-    <bean id="s3Util" class="nhlapp.util.S3Util">
-        <property name="s3AccessKey" value="${s3.accessKey}"/>
-        <property name="s3SecretKey" value="${s3.secretkey}"/>
-        <property name="s3Bucket" value="${s3.bucket}"/>
-    </bean> 
-    
-    <bean id="playerDownloader" class="nhlapp.downloader.PlayerDownloader"/>
-      
-    <bean id="playerService" class="nhlapp.service.PlayerService" />   
-      
+    </bean>                   
+          
     <!-- secirity -->
         
     <security:http auto-config="true" use-expressions="true">
@@ -68,16 +51,7 @@
        
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
         <constructor-arg ref="dataSource"/>
-    </bean>    
-    
-    <bean id="spittleDao" class="mvc.dao.JdbcSpittleDao">
-        <property name="dataSource" ref="dataSource" />
-    </bean>       
-    
-    <bean id="spitterDao" class="mvc.dao.JdbcSpitterDao">
-        <property name="dataSource" ref="dataSource" />
-    </bean>            
-
+    </bean>              
     
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource"> <ref bean="dataSource"/>
@@ -97,9 +71,20 @@
 
     </bean>
 
+    <!-- beans -->
+
     <bean id="playerDao" class="nhlapp.dao.HibernatePlayerDao" >
          <constructor-arg ref="sessionFactory"/>
     </bean>
-
+    
+    <bean id="s3Util" class="nhlapp.util.S3Util">
+        <property name="s3AccessKey" value="${s3.accessKey}"/>
+        <property name="s3SecretKey" value="${s3.secretkey}"/>
+        <property name="s3Bucket" value="${s3.bucket}"/>
+    </bean> 
+    
+    <bean id="playerDownloader" class="nhlapp.downloader.PlayerDownloader"/>
+      
+    <bean id="playerService" class="nhlapp.service.PlayerService" />   
 
 </beans>
