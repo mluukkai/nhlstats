@@ -38,7 +38,9 @@ public class PlayerService implements PlayerDao {
     }
 
     public void download() {
-        playerDownloader.setPageLimit(1);
+        playerDownloader.setPageLimit(30);
+
+        //int pl = 1;
 
         for (Player player : playerDownloader.getPlayers()) {
             Player old = playerDao.findByName(player.getName());
@@ -49,11 +51,33 @@ public class PlayerService implements PlayerDao {
                 continue;
             }
 
+            //System.out.println(pl++);
+
             playerDao.save(player);
         }
     }
 
     private boolean unchanged(Player player, Player old) {
-        return false;
+        if (old == null) {
+            return false;
+        }
+
+        if (player.getTeam().equals(old.getTeam())) {
+            return false;
+        }
+        if (player.getGames() != old.getGames()) {
+            return false;
+        }
+        if (player.getGoals() != old.getGoals()) {
+            return false;
+        }
+        if (player.getAssists() != old.getAssists()) {
+            return false;
+        }
+        if (player.getPenalties() != old.getPenalties()) {
+            return false;
+        }
+
+        return true;
     }
 }
