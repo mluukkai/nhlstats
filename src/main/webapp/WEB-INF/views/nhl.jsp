@@ -38,7 +38,7 @@
                         <td ALIGN=CENTER> ${player.games} </td>
                         <td ALIGN=CENTER>  ${player.goals} </td>
                         <td ALIGN=CENTER>  ${player.assists} </td>
-                        <td ALIGN=CENTER>  ${player.penalties} </td>
+                        <td ALIGN=CENTER>  ${player.points} </td>
                         <td ALIGN=CENTER>  ${player.penalties} </td>
                     </tr>
 

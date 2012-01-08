@@ -1,7 +1,7 @@
 package nhlapp.service;
 
 import java.util.List;
-import mvc.util.S3Util;
+import nhlapp.util.S3Util;
 import nhlapp.dao.PlayerDao;
 import nhlapp.domain.Player;
 import nhlapp.downloader.PlayerDownloader;

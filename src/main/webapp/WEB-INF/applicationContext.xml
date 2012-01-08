@@ -25,7 +25,7 @@
     
     <bean id="spitterService" class="mvc.service.SpitterServiceImpl" />  
     
-    <bean id="s3Util" class="mvc.util.S3Util">
+    <bean id="s3Util" class="nhlapp.util.S3Util">
         <property name="s3AccessKey" value="${s3.accessKey}"/>
         <property name="s3SecretKey" value="${s3.secretkey}"/>
         <property name="s3Bucket" value="${s3.bucket}"/>
@@ -38,22 +38,18 @@
     <!-- secirity -->
         
     <security:http auto-config="true" use-expressions="true">
-        <security:intercept-url pattern="/springpizza*" access="ROLE_SPITTER"/>
-        <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_SPITTER')" />
+        <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
         <security:logout />
     </security:http>
     
     <security:user-service id="userService">
-        <security:user name="mluukkai" password="mluukkai" authorities="ROLE_SPITTER" />
+        <security:user name="mluukkai" password="mluukkai" authorities="ROLE_ADMIN" />
         <security:user name="koe" password="koe" authorities="ROLE_OTHER" />
     </security:user-service>
     
     <security:authentication-manager>
-        <security:authentication-provider>            
-            <security:jdbc-user-service data-source-ref="dataSource" />
-        </security:authentication-provider>
-    </security:authentication-manager>
-                
+        <security:authentication-provider user-service-ref="userService"/>            
+    </security:authentication-manager>                
         
     <!-- Data access-->                          
           
@@ -99,10 +95,6 @@
             </list>
         </property>        
 
-    </bean>
- 
-    <bean id="tuoteDao" class="nhlapp.dao.HibernateTuoteDao2" >
-         <constructor-arg ref="sessionFactory"/>
     </bean>
 
     <bean id="playerDao" class="nhlapp.dao.HibernatePlayerDao" >

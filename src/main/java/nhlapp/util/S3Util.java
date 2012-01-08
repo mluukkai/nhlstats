@@ -1,4 +1,4 @@
-package mvc.util;
+package nhlapp.util;
 
 import java.io.ByteArrayInputStream;
 import org.jets3t.service.S3Service;

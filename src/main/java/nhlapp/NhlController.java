@@ -3,7 +3,7 @@ package nhlapp;
 import java.util.Date;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
-import mvc.util.S3Util;
+import nhlapp.util.S3Util;
 import nhlapp.dao.PlayerDao;
 import nhlapp.domain.Player;
 import nhlapp.downloader.PlayerDownloader;

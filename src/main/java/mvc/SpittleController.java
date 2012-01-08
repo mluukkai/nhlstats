@@ -3,7 +3,7 @@ package mvc;
 import javax.servlet.http.HttpSession;
 import mvc.model.*;
 import mvc.service.SpitterService;
-import mvc.util.S3Util;
+import nhlapp.util.S3Util;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -109,7 +109,7 @@ public class Player {
         return name+";"+team+";"+games+";"+goals+";"+assists+";"+penalties;
     }
     
-    private int getPoints() {
+    public int getPoints() {
         return goals+assists;
     }
 }
