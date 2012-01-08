@@ -1,14 +1,13 @@
 package nhlapp;
 
-
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 import javax.servlet.http.HttpSession;
 import mvc.util.S3Util;
 import nhlapp.dao.PlayerDao;
 import nhlapp.domain.Player;
 import nhlapp.downloader.PlayerDownloader;
+import nhlapp.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,21 +18,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class NhlController {
+    private static String updated = "";
+        
     @Autowired
-    PlayerDao playerDao;
-            
-    @Autowired
-    PlayerDownloader playerDownloader;
+    PlayerService playerService;    
     
-    @Autowired
-    S3Util s3Util;
-    
-    @RequestMapping({"/","nhl"}) 
+    @RequestMapping({"/","players.html"}) 
     public String showFrontPage(Map<String, Object> model, HttpSession session) {
-        model.put("players", playerDao.findAll());
+        model.put("players", playerService.findAll());
+        model.put("updated", updated);
         
         return "nhl";
     }    
+    
+    @RequestMapping({"/players.txt"}) 
+    public String showTxt(Map<String, Object> model, HttpSession session) {
+        model.put("players", playerService.findAll());
+        
+        return "txt";
+    } 
     
     @RequestMapping(value="/add", method= RequestMethod.GET) 
     public String addPlayerForm(Model model){
@@ -44,7 +47,7 @@ public class NhlController {
     
     @RequestMapping(value="/add", method= RequestMethod.POST) 
     public String addPlayer(Player player, BindingResult bindingResult) {
-        Player p = playerDao.findByName(player.getName());
+        Player p = playerService.findByName(player.getName());
         
         if ( p!=null ) {
             FieldError fe = new FieldError("player", "name", "player exists already");
@@ -52,36 +55,29 @@ public class NhlController {
             return "player/form";
         }
         
-        playerDao.save(player);        
-        return "redirect:/";
+        playerService.save(player);        
+        return "redirect:/players.html";
     }     
     
     @RequestMapping({"/download"}) 
     public String download(Map<String, Object> model, HttpSession session) {
-        playerDownloader.setPageLimit(1);
+        playerService.download();                    
+        updated = new Date().toString();
         
-        for (Player player : playerDownloader.getPlayers()) {
-            Player old = playerDao.findByName(player.getName());
-            if ( old!=null ) {
-                player.setId(old.getId());
-            }                 
-            
-            playerDao.save(player);
-        }
-        
-        model.put("players", playerDao.findAll());
-        
-        return "nhl";
+        return "redirect:/players.html";
     } 
     
     @RequestMapping({"/raw"}) 
     public String rawMode(Map<String, Object> model, HttpSession session) {
-        playerDownloader.setPageLimit(2);
-        
-        boolean status = s3Util.saveFile(playerDownloader.rawText(1), "1.txt");
-        
+        boolean status = playerService.savePageSource(1, "page1.txt");
+
         model.put("text", status);
-        
+       
         return "raw";
     }       
+    
+    @RequestMapping({"admin"})
+    public String showAdminPage(Map<String, Object> model, HttpSession session) {
+        return "admin/admin";
+    } 
 }

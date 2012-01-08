@@ -12,8 +12,10 @@
     </head>
 
     <body>
-        <h1>Nhl statistics</h1>
+        <h1>Nhl player statistics</h1>
 
+        <p><i>${updated}</i></p>
+        
         <table>
             <thead>
                 <tr>
@@ -50,6 +52,8 @@
 
         <a href="/download">download</a>
         
-        <a href="/raw">raw</a>
+        <a href="/players.txt">txt</a>
+        
+        <a href="/raw">raw</a> 
     </body>
 </html>

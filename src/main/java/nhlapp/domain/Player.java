@@ -105,6 +105,10 @@ public class Player {
         return name+" "+team+" "+games+" "+goals+"+"+assists+"="+getPoints()+" "+penalties;
     }
 
+    public String getAsText(){
+        return name+";"+team+";"+games+";"+goals+";"+assists+";"+penalties;
+    }
+    
     private int getPoints() {
         return goals+assists;
     }

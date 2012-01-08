@@ -32,7 +32,9 @@
     </bean> 
     
     <bean id="playerDownloader" class="nhlapp.downloader.PlayerDownloader"/>
-       
+      
+    <bean id="playerService" class="nhlapp.service.PlayerService" />   
+      
     <!-- secirity -->
         
     <security:http auto-config="true" use-expressions="true">
