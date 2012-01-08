@@ -1,5 +1,6 @@
 package nhlapp.service;
 
+import java.util.Collections;
 import java.util.List;
 import nhlapp.util.S3Util;
 import nhlapp.dao.PlayerDao;
@@ -18,7 +19,10 @@ public class PlayerService implements PlayerDao {
 
     @Override
     public List<Player> findAll() {
-        return playerDao.findAll();
+        List<Player> players = playerDao.findAll();
+        Collections.sort(players);
+        
+        return players;
     }
 
     @Override

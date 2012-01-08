@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Player {
+public class Player implements Comparable<Player> {
     @Id
     @GeneratedValue
     private Long id;
@@ -111,5 +111,14 @@ public class Player {
     
     public int getPoints() {
         return goals+assists;
+    }
+
+    @Override
+    public int compareTo(Player t) {
+        int pointDifference = t.getPoints()-getPoints();
+        
+        if ( pointDifference!=0 ) return pointDifference;
+        
+        return t.getGoals()-getGoals();
     }
 }
