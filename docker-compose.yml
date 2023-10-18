@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   app:
-    image: nhlforohtu
+    image: toska/nhlstats
     build: .
     ports:
       - 3001:3001

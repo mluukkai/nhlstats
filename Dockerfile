@@ -8,6 +8,6 @@ RUN npm ci
 
 CMD npm start
 
-# docker build -t nhlforohtu .
+# docker build -t toska/nhlstats .
 
-# docker run -p 3001:3001 nhlforohtu
+# docker run -p 3001:3001 toska/nhlstats

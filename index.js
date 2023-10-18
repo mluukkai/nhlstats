@@ -29,6 +29,16 @@ app.get("/:year/players.txt", (req, res) => {
   res.send(strings.join("\n"));
 });
 
+app.get("/", (req, res) => {
+  const resp = `
+  <div>
+    <div>usage ${req.protocol}://${req.get('host')}/:year/players.txt</div>
+    <div>following years available  ${Object.keys(stats).join(", ")}</div>
+  </div>
+  `
+  res.send(resp);
+});
+
 app.get("/:year/players", (req, res) => {
   const players = stats[req.params.year];
   if (!players) {
