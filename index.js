@@ -1,6 +1,8 @@
-const axios = require("axios");
 const express = require("express");
 const app = express();
+
+const getSeason = require('./scrape')
+let currentPlayers = null
 
 const stats = {
   "2018-19": require("./data-20182019.json"),
@@ -9,13 +11,13 @@ const stats = {
   "2021-22": require("./data-20212022.json"),
   "2022-23": require("./data-20222023.json"),
   "2023-24": require("./data-20232024.json"),
+  "2024-25": require("./data-20242025.json"),
 };
 
-const url =
-  "https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=false&reportName=skatersummary&cayenneExp=leagueId=133%20and%20gameTypeId=2%20and%20seasonId%3E=20192020%20and%20seasonId%3C=20192020";
-
 app.get("/:year/players.txt", (req, res) => {
-  const players = stats[req.params.year];
+  const season = req.params.year
+  const players = season === "20242025" && currentPlayers ? currentPlayers : stats[req.params.year];
+
   if (!players) {
     return res.status(400).json({
       error: "following years only available " + Object.keys(stats).join(", "),
@@ -32,8 +34,8 @@ app.get("/:year/players.txt", (req, res) => {
 app.get("/", (req, res) => {
   const resp = `
   <div>
-    <div>usage ${req.protocol}://${req.get('host')}/:year/players.txt</div>
-    <div>following years available  ${Object.keys(stats).join(", ")}</div>
+    <div>usage ${req.protocol}://${req.get('host')}/:season/players.txt</div>
+    <div>following seasons available  ${Object.keys(stats).join(", ")}</div>
   </div>
   `
   res.send(resp);
@@ -43,14 +45,31 @@ app.get("/:year/players", (req, res) => {
   const players = stats[req.params.year];
   if (!players) {
     return res.status(400).json({
-      error: "following years only available " + Object.keys(stats).join(", "),
+      error: "only following seasons available " + Object.keys(stats).join(", "),
     });
   }
 
   res.json(players);
 });
 
+app.get("/update", async (req, res) => {
+  console.log("warmup")
+  currentPlayers = await getSeason.getSeason("20242025")
+  console.log("warmed!")
+
+  const resp = `<div>updated the current year</div>`
+  res.send(resp);
+});
+
+const setup = async () => {
+  console.log("warmup")
+  currentPlayers = await getSeason.getSeason("20242025")
+  console.log("warmed!")
+}
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+setup()
