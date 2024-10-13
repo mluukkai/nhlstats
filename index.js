@@ -11,7 +11,7 @@ const stats = {
   "2021-22": require("./data-20212022.json"),
   "2022-23": require("./data-20222023.json"),
   "2023-24": require("./data-20232024.json"),
-  "2024-25": require("./data-20242025.json"),
+  //"2024-25": require("./data-20242025.json"),
 };
 
 app.get("/:year/players.txt", (req, res) => {
