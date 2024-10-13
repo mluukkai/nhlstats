@@ -63,7 +63,7 @@ app.get("/update", async (req, res) => {
 
 const setup = async () => {
   console.log("warmup")
-  //currentPlayers = await getSeason.getSeason("20242025")
+  currentPlayers = await getSeason.getSeason("20242025")
   console.log("warmed!")
 }
 
