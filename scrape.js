@@ -66,7 +66,7 @@ const do_the_acual_shit = async () => {
 
 }
 
-do_the_acual_shit();
+//do_the_acual_shit();
 
 module.exports = {
   getSeason
