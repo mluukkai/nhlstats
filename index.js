@@ -34,7 +34,7 @@ app.get("/:year/players.txt", (req, res) => {
 app.get("/", (req, res) => {
   const resp = `
   <div>
-    <div>usage ${req.protocol}://${req.get('host')}/:season/players.txt</div>
+    <div>usage https://studies.cs.helsinki.fi/:season/players.txt</div>
     <div>following seasons available  ${Object.keys(stats).join(", ")}</div>
   </div>
   `
