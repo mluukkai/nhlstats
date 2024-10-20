@@ -4,14 +4,24 @@ const app = express();
 const getSeason = require('./scrape')
 let currentPlayers = null
 
+function shuffled(array) {
+  for (var i = array.length - 1; i >= 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+  return array;
+}
+
 const stats = {
-  "2018-19": require("./data-20182019.json"),
-  "2019-20": require("./data-20192020.json"),
-  "2020-21": require("./data-20202021.json"),
-  "2021-22": require("./data-20212022.json"),
-  "2022-23": require("./data-20222023.json"),
-  "2023-24": require("./data-20232024.json"),
-  "2024-25": require("./data-20242025.json"),
+  "2018-19": shuffled([...require("./data-20182019.json")]),
+  "2019-20": shuffled([...require("./data-20192020.json")]),
+  "2020-21": shuffled([...require("./data-20202021.json")]),
+  "2021-22": shuffled([...require("./data-20212022.json")]),
+  "2022-23": shuffled([...require("./data-20222023.json")]),
+  "2023-24": shuffled([...require("./data-20232024.json")]),
+  "2024-25": shuffled([...require("./data-20242025.json")]),
 };
 
 app.get("/:year/players.txt", (req, res) => {
@@ -40,6 +50,8 @@ app.get("/", (req, res) => {
   `
   res.send(resp);
 });
+
+
 
 app.get("/:year/players", (req, res) => {
   const players = stats[req.params.year];
