@@ -26,7 +26,8 @@ const stats = {
 
 app.get("/:year/players.txt", (req, res) => {
   const season = req.params.year
-  const players = season === "20242025" && currentPlayers ? currentPlayers : stats[req.params.year];
+  //const players = season === "20242025" && currentPlayers ? currentPlayers : stats[req.params.year];
+  const players = stats[req.params.year];
 
   if (!players) {
     return res.status(400).json({
@@ -37,6 +38,8 @@ app.get("/:year/players.txt", (req, res) => {
   const strings = players.map((p) => {
     return `${p.name};${p.team};;${p.goals};${p.assists}`;
   });
+
+  console.log(`sending ${strings.length} players for ${season}`)
 
   res.send(strings.join("\n"));
 });
@@ -61,12 +64,13 @@ app.get("/:year/players", (req, res) => {
     });
   }
 
+  console.log(`sending ${strings.length} players for ${season}`)
   res.json(players);
 });
 
 app.get("/update", async (req, res) => {
   console.log("warmup")
-  currentPlayers = await getSeason.getSeason("20242025")
+  //currentPlayers = await getSeason.getSeason("20242025")
   console.log("warmed!")
 
   const resp = `<div>updated the current year</div>`
