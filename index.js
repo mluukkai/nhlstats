@@ -64,7 +64,7 @@ app.get("/:year/players", (req, res) => {
     });
   }
 
-  console.log(`sending ${strings.length} players for ${season}`)
+  console.log(`sending ${players.length} players for ${season}`)
   res.json(players);
 });
 
