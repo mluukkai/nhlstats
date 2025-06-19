@@ -62,11 +62,10 @@ const do_the_acual_shit = async () => {
   const fileName = `./data-${season}.json`;
   const players = await getSeason(season)
 
-  fs.writeFileSync(fileName, JSON.stringify(players), "utf-8");
 
 }
 
-//do_the_acual_shit();
+do_the_acual_shit();
 
 module.exports = {
   getSeason
