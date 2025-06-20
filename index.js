@@ -39,8 +39,6 @@ app.get("/:year/players.txt", (req, res) => {
     return `${p.name};${p.team};;${p.goals};${p.assists}`;
   });
 
-  console.log(`sending ${strings.length} players for ${season}`)
-
   res.send(strings.join("\n"));
 });
 
@@ -54,8 +52,6 @@ app.get("/", (req, res) => {
   res.send(resp);
 });
 
-
-
 app.get("/:year/players", (req, res) => {
   const players = stats[req.params.year];
   if (!players) {
@@ -64,7 +60,6 @@ app.get("/:year/players", (req, res) => {
     });
   }
 
-  console.log(`sending ${players.length} players for ${season}`)
   res.json(players);
 });
 
