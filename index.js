@@ -14,6 +14,14 @@ function shuffled(array) {
   return array;
 }
 
+function sTn(seasonString) {
+  // Convert "2018-19" to "20182019"
+  const [startYear, endYearShort] = seasonString.split('-');
+  const century = startYear.substring(0, 2); // "20"
+  const endYear = century + endYearShort; // "2019"
+  return startYear + endYear; // "20182019"
+}
+
 const stats = {
   "2018-19": shuffled([...require("./data-20182019.json")]),
   "2019-20": shuffled([...require("./data-20192020.json")]),
@@ -22,16 +30,17 @@ const stats = {
   "2022-23": shuffled([...require("./data-20222023.json")]),
   "2023-24": shuffled([...require("./data-20232024.json")]),
   "2024-25": shuffled([...require("./data-20242025.json")]),
+  "2025-26": shuffled([...require("./data-20252026.json")]),
 };
 
 app.get("/:year/players.txt", (req, res) => {
   const season = req.params.year
-  //const players = season === "20242025" && currentPlayers ? currentPlayers : stats[req.params.year];
+  //const players = season === "20252026" && currentPlayers ? currentPlayers : stats[req.params.year];
   const players = stats[req.params.year];
 
   if (!players) {
     return res.status(400).json({
-      error: "following years only available " + Object.keys(stats).join(", "),
+      error: "following years only available " + Object.keys(stats).map(sTn).join(", "),
     });
   }
 
@@ -46,7 +55,7 @@ app.get("/", (req, res) => {
   const resp = `
   <div>
     <div>usage https://studies.cs.helsinki.fi/:season/players.txt</div>
-    <div>following seasons available  ${Object.keys(stats).join(", ")}</div>
+    <div>following seasons available  ${Object.keys(stats).map(sTn).join(", ")}</div>
   </div>
   `
   res.send(resp);
@@ -65,7 +74,7 @@ app.get("/:year/players", (req, res) => {
 
 app.get("/update", async (req, res) => {
   console.log("warmup")
-  //currentPlayers = await getSeason.getSeason("20242025")
+  currentPlayers = await getSeason.getSeason("20252026")
   console.log("warmed!")
 
   const resp = `<div>updated the current year</div>`
@@ -74,7 +83,7 @@ app.get("/update", async (req, res) => {
 
 const setup = async () => {
   console.log("warmup")
-  currentPlayers = await getSeason.getSeason("20242025")
+  currentPlayers = await getSeason.getSeason("20252026")
   console.log("warmed!")
 }
 
