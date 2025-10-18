@@ -59,10 +59,9 @@ const getSeason = async (season) => {
 
 const do_the_acual_shit = async () => {
   const season = "20242025";
-  const fileName = `./data-${season}.json`;
+  const fileName = `./dataz-${season}.json`;
   const players = await getSeason(season)
-
-
+  fs.writeFileSync(fileName, JSON.stringify(players));
 }
 
 do_the_acual_shit();
