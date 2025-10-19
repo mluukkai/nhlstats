@@ -75,7 +75,7 @@ const do_the_acual_shit = async () => {
   fs.writeFileSync(fileName, JSON.stringify(players));
 }
 
-do_the_acual_shit();
+//do_the_acual_shit();
 
 module.exports = {
   getSeason
