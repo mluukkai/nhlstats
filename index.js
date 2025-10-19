@@ -4,6 +4,18 @@ const app = express();
 const getSeason = require('./scrape')
 let currentPlayers = null
 
+function dups(players) {
+  const seen = new Set();
+  return players.filter(player => {
+    if (seen.has(player.id)) {
+      return false;
+    }
+    seen.add(player.id);
+    return true;
+  });
+}
+
+
 function shuffled(array) {
   for (var i = array.length - 1; i >= 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
@@ -11,7 +23,7 @@ function shuffled(array) {
       array[i] = array[j];
       array[j] = temp;
   }
-  return array;
+  return dups(array);
 }
 
 const stats = {
